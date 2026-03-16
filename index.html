@@ -283,6 +283,31 @@ function aggregateMonthly(ts, field) {
     return Object.entries(byMonth).map(([k, v]) => ({ x: k + '-15', y: Math.round(v.sum * 10) / 10 }));
 }
 
+// Build aligned monthly datasets for both products (fill missing months with 0)
+function makeMonthlyDatasets(field, range) {
+    const cFiltered = filterByRange(cyclone.timeseries, range);
+    const sFiltered = filterByRange(spindoc.timeseries, range);
+    const cMonthly = {};
+    const sMonthly = {};
+    cFiltered.forEach(r => {
+        const d = new Date(r.date);
+        const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+        cMonthly[key] = (cMonthly[key] || 0) + (r[field] || 0);
+    });
+    sFiltered.forEach(r => {
+        const d = new Date(r.date);
+        const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+        sMonthly[key] = (sMonthly[key] || 0) + (r[field] || 0);
+    });
+    const allMonths = [...new Set([...Object.keys(cMonthly), ...Object.keys(sMonthly)])].sort();
+    const labels = allMonths.map(k => k + '-15');
+    return {
+        labels,
+        cData: allMonths.map(k => Math.round((cMonthly[k] || 0) * 10) / 10),
+        sData: allMonths.map(k => Math.round((sMonthly[k] || 0) * 10) / 10),
+    };
+}
+
 // ── Cards (reactive to range) ──
 function renderCards() {
     const container = document.getElementById('snapshot-cards');
@@ -326,45 +351,101 @@ function getChartColors() {
 
 function makeDataset(label, ts, field, color, range, view) {
     const filtered = filterByRange(ts, range);
-    let data;
-    if (view === 'monthly') {
-        data = aggregateMonthly(filtered, field);
-    } else {
-        data = filtered.map(r => ({ x: r.date, y: r[field] }));
-    }
+    const data = filtered.map(r => ({ x: r.date, y: r[field] }));
     return {
         label, data,
         borderColor: color,
-        backgroundColor: color + '20',
-        borderWidth: view === 'monthly' ? 3 : 2,
-        pointRadius: view === 'monthly' ? 4 : 0,
+        backgroundColor: color + '40',
+        borderWidth: 2,
+        pointRadius: 0,
         pointHitRadius: 8,
         tension: 0.3,
         fill: false,
     };
 }
 
-function createChart(canvasId, field, opts = {}) {
-    const ctx = document.getElementById(canvasId).getContext('2d');
+function makeBarDataset(label, labels, values, color) {
+    return {
+        label,
+        data: values,
+        backgroundColor: color + '80',
+        borderColor: color,
+        borderWidth: 1,
+        barPercentage: 0.8,
+        categoryPercentage: 0.9,
+    };
+}
+
+function buildChartConfig(canvasId, field, opts, view) {
     const colors = getChartColors();
-    const view = chartViews[canvasId] || 'daily';
-    const chart = new Chart(ctx, {
-        type: view === 'monthly' ? 'bar' : 'line',
+    const isBar = view === 'monthly' && (field === 'estimated_daily_units_sold' || field === 'estimated_sales');
+
+    if (isBar) {
+        const monthly = makeMonthlyDatasets(field, currentRange);
+        return {
+            type: 'bar',
+            data: {
+                labels: monthly.labels,
+                datasets: [
+                    makeBarDataset('CYCLONE', monthly.labels, monthly.cData, '#0969da'),
+                    makeBarDataset('SPINDOC', monthly.labels, monthly.sData, '#cf222e'),
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: 'rgba(0,0,0,0.85)',
+                        callbacks: {
+                            title: function(items) {
+                                if (!items.length) return '';
+                                const d = new Date(items[0].label);
+                                return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+                            },
+                            label: function(ctx) {
+                                let val = ctx.parsed.y;
+                                if (opts.prefix) val = opts.prefix + val.toLocaleString(undefined, {maximumFractionDigits: 0});
+                                else val = val.toLocaleString(undefined, {maximumFractionDigits: 1});
+                                return ctx.dataset.label + ': ' + val;
+                            }
+                        }
+                    },
+                    legend: { labels: { color: colors.text, usePointStyle: true, pointStyle: 'circle' } }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: { unit: 'month', displayFormats: { month: 'MMM yyyy' } },
+                        grid: { color: colors.grid },
+                        ticks: { color: colors.text },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: colors.grid },
+                        ticks: { color: colors.text, callback: v => opts.prefix ? opts.prefix + v.toLocaleString() : v.toLocaleString() },
+                    }
+                }
+            }
+        };
+    }
+
+    // Line chart (daily)
+    const xUnit = currentRange !== 'all' && currentRange <= 30 ? 'day' : currentRange !== 'all' && currentRange <= 90 ? 'week' : 'month';
+    return {
+        type: 'line',
         data: {
             datasets: [
-                makeDataset('CYCLONE', cyclone.timeseries, field, '#0969da', currentRange, view),
-                makeDataset('SPINDOC', spindoc.timeseries, field, '#cf222e', currentRange, view),
+                makeDataset('CYCLONE', cyclone.timeseries, field, '#0969da', currentRange),
+                makeDataset('SPINDOC', spindoc.timeseries, field, '#cf222e', currentRange),
             ]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            responsive: true, maintainAspectRatio: false,
             interaction: { mode: 'nearest', axis: 'x', intersect: false },
             plugins: {
                 tooltip: {
                     backgroundColor: 'rgba(0,0,0,0.85)',
-                    titleFont: { size: 12 },
-                    bodyFont: { size: 12 },
                     callbacks: {
                         label: function(ctx) {
                             let val = ctx.parsed.y;
@@ -380,7 +461,7 @@ function createChart(canvasId, field, opts = {}) {
             scales: {
                 x: {
                     type: 'time',
-                    time: { unit: view === 'monthly' ? 'month' : (currentRange !== 'all' && currentRange <= 30 ? 'day' : currentRange !== 'all' && currentRange <= 90 ? 'week' : 'month'), displayFormats: { day: 'MMM d', week: 'MMM d', month: 'MMM yyyy' } },
+                    time: { unit: xUnit, displayFormats: { day: 'MMM d', week: 'MMM d', month: 'MMM yyyy' } },
                     grid: { color: colors.grid },
                     ticks: { color: colors.text, maxTicksLimit: 12 },
                 },
@@ -392,22 +473,27 @@ function createChart(canvasId, field, opts = {}) {
                 }
             }
         }
-    });
+    };
+}
+
+function createChart(canvasId, field, opts = {}) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    const view = chartViews[canvasId] || 'daily';
+    const cfg = buildChartConfig(canvasId, field, opts, view);
+    const chart = new Chart(ctx, cfg);
     charts.push(chart);
     chartConfigs.push({ canvasId, field, opts });
     return chart;
 }
 
 function updateCharts() {
+    // Destroy and recreate charts to handle type changes (line <-> bar)
     chartConfigs.forEach((cfg, i) => {
-        const chart = charts[i];
         const view = chartViews[cfg.canvasId] || 'daily';
-        chart.data.datasets[0] = makeDataset('CYCLONE', cyclone.timeseries, cfg.field, '#0969da', currentRange, view);
-        chart.data.datasets[1] = makeDataset('SPINDOC', spindoc.timeseries, cfg.field, '#cf222e', currentRange, view);
-        let unit = view === 'monthly' ? 'month' : (currentRange !== 'all' && currentRange <= 30 ? 'day' : currentRange !== 'all' && currentRange <= 90 ? 'week' : 'month');
-        chart.options.scales.x.time.unit = unit;
-        chart.config.type = (view === 'monthly' && (cfg.field === 'estimated_daily_units_sold' || cfg.field === 'estimated_sales')) ? 'bar' : 'line';
-        chart.update();
+        charts[i].destroy();
+        const ctx = document.getElementById(cfg.canvasId).getContext('2d');
+        const newCfg = buildChartConfig(cfg.canvasId, cfg.field, cfg.opts, view);
+        charts[i] = new Chart(ctx, newCfg);
     });
 }
 
