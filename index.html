@@ -443,8 +443,8 @@ function renderMonthlyTable(productData, tableId, brandCls) {
 
     let totalUnits = 0, totalSales = 0;
 
-    // Show all months available, highlight last 12
-    const displayMonths = monthKeys;
+    // Show only last 12 full months + current partial
+    const displayMonths = [...last12, ...(monthKeys.includes(today) ? [today] : [])];
     displayMonths.forEach(m => {
         const d = months[m];
         const avgPrice = d.prices.length ? d.prices.reduce((a,b) => a+b, 0) / d.prices.length : 0;
