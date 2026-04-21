@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amix Best Sellers · Spain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+    --bg: #fbf9f5;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f4f1ea;
+    --text: #1b1a17;
+    --text-secondary: #6e665a;
+    --border: #e8e1d4;
+    --accent: #9a3f1f;
+    --accent-bg: #f8e7dc;
+    --gold: #b48a4a;
+    --ink: #0d0c0a;
+    --shadow-sm: 0 1px 2px rgba(30,20,10,0.04);
+    --shadow: 0 2px 6px rgba(30,20,10,0.06), 0 8px 24px rgba(30,20,10,0.04);
+    --shadow-lg: 0 4px 12px rgba(30,20,10,0.08), 0 20px 48px rgba(30,20,10,0.08);
+    --radius: 10px;
+    --font-display: 'Fraunces', 'Times New Roman', serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+[data-theme="dark"] {
+    --bg: #13100c;
+    --bg-card: #1c1813;
+    --bg-card-hover: #241e18;
+    --text: #ede6d9;
+    --text-secondary: #958b7c;
+    --border: #2d2720;
+    --accent: #d97852;
+    --accent-bg: #3a1f12;
+    --gold: #d8b679;
+    --ink: #fffaf0;
+    --shadow: 0 2px 6px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,0.4);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: var(--font-body);
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1320px; margin: 0 auto; padding: 28px 32px; }
+
+header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 32px 0 24px; margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+}
+header h1 {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 38px; line-height: 1.1; color: var(--ink);
+    letter-spacing: -0.03em; font-variation-settings: "opsz" 60;
+}
+header h1 .mark {
+    color: var(--accent); font-style: italic; font-variation-settings: "opsz" 144;
+}
+.header-meta {
+    color: var(--text-secondary); font-size: 13px; margin-top: 6px;
+    font-family: var(--font-mono); letter-spacing: 0;
+}
+.theme-toggle {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 8px 16px; cursor: pointer;
+    color: var(--text); font-size: 12px; font-family: var(--font-body);
+    font-weight: 500; box-shadow: var(--shadow-sm);
+    transition: all 0.15s;
+}
+.theme-toggle:hover { background: var(--bg-card-hover); transform: translateY(-1px); }
+
+.hero {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px;
+    margin-bottom: 32px; box-shadow: var(--shadow);
+    text-align: center; position: relative; overflow: hidden;
+}
+.hero::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+}
+.hero .eyebrow {
+    font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--text-secondary); margin-bottom: 12px;
+}
+.hero .big {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 72px; line-height: 1; color: var(--accent);
+    font-variation-settings: "opsz" 144;
+    letter-spacing: -0.04em; margin: 4px 0 8px;
+}
+.hero .sub { font-size: 14px; color: var(--text); margin-top: 12px; }
+.hero .sub strong { color: var(--ink); font-weight: 600; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+.kpi {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px 20px;
+    text-align: left; box-shadow: var(--shadow-sm);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.kpi .label {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px;
+}
+.kpi .value {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 32px; line-height: 1.05; color: var(--ink);
+    letter-spacing: -0.02em;
+}
+.kpi .sub { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+.kpi.accent .value { color: var(--accent); }
+
+.section-header {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 22px; margin: 40px 0 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    letter-spacing: -0.02em; color: var(--ink);
+}
+.section-header .muted { font-size: 13px; color: var(--text-secondary); font-weight: 400; font-family: var(--font-body); margin-left: 10px; }
+
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+.charts-grid.full { grid-template-columns: 1fr; }
+.chart-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-sm);
+}
+.chart-box h3 {
+    font-family: var(--font-display); font-size: 16px; font-weight: 600;
+    margin-bottom: 4px; color: var(--ink);
+}
+.chart-box .hint { font-size: 11px; color: var(--text-secondary); margin-bottom: 16px; font-family: var(--font-mono); letter-spacing: 0; }
+.chart-container { position: relative; height: 320px; }
+.chart-container.tall { height: 420px; }
+
+/* Filter pills (categories) */
+.filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 18px;
+    align-items: center;
+}
+.filter-bar .label {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-right: 4px;
+}
+.filter-pill {
+    padding: 6px 14px; border-radius: 24px; border: 1px solid var(--border);
+    background: var(--bg-card); color: var(--text); cursor: pointer;
+    font-size: 12px; font-family: var(--font-body); font-weight: 500;
+    transition: all 0.15s;
+}
+.filter-pill:hover { background: var(--bg-card-hover); }
+.filter-pill.active {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+}
+.filter-pill .count {
+    margin-left: 6px; font-family: var(--font-mono); font-size: 10px;
+    opacity: 0.7;
+}
+
+.search-box {
+    margin-left: auto;
+    padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg-card); color: var(--text);
+    font-size: 13px; font-family: var(--font-body); width: 240px;
+}
+.search-box:focus { outline: none; border-color: var(--accent); }
+
+/* Table */
+.table-wrapper {
+    overflow-x: auto; margin-bottom: 32px;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); background: var(--bg-card);
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+th {
+    background: var(--bg-card-hover); font-weight: 600; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    position: sticky; top: 0; z-index: 1;
+    cursor: pointer; user-select: none;
+    font-family: var(--font-mono);
+}
+th:hover { background: var(--border); color: var(--ink); }
+th .sort-arrow { margin-left: 4px; font-size: 9px; opacity: 0.5; }
+td:first-child, th:first-child { text-align: left; }
+td.left { text-align: left; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-card-hover); }
+.rank-cell {
+    font-family: var(--font-mono); font-weight: 700;
+    color: var(--accent); width: 36px;
+}
+.rank-cell.top3 { font-size: 15px; }
+
+.col-title {
+    white-space: normal !important; max-width: 300px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; font-size: 12px; color: var(--text); line-height: 1.35;
+}
+.brand-tag {
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+    margin-top: 2px;
+}
+.cat-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 600;
+    background: var(--accent-bg); color: var(--accent);
+    letter-spacing: 0.02em; font-family: var(--font-mono);
+}
+.product-img {
+    width: 44px; height: 44px; object-fit: contain; border-radius: 4px;
+    background: white; border: 1px solid var(--border); vertical-align: middle;
+}
+.product-img-link { display: inline-block; line-height: 0; }
+.product-img-link:hover .product-img { border-color: var(--accent); }
+.product-img-placeholder {
+    display: inline-block; width: 44px; height: 44px; line-height: 44px;
+    text-align: center; background: var(--bg-card-hover); border-radius: 4px;
+    color: var(--text-secondary); font-size: 14px; border: 1px solid var(--border);
+}
+.no-results {
+    text-align: center; padding: 40px; color: var(--text-secondary);
+    font-style: italic;
+}
+
+footer {
+    text-align: center; padding: 28px 0; margin-top: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary); font-size: 12px; font-family: var(--font-mono);
+}
+
+@media (max-width: 900px) {
+    .charts-grid, .kpi-grid { grid-template-columns: 1fr; }
+    header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    header h1 { font-size: 28px; }
+    .hero .big { font-size: 52px; }
+    .search-box { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div>
+            <h1>Best <span class="mark">Sellers</span> · Spain</h1>
+            <div class="header-meta">April 21, 2026 · Amazon.es · Sales since 2025-01-01</div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+    </header>
+
+    <div class="hero">
+        <div class="eyebrow">Total Revenue · Selling Products on Amazon.es (EUR)</div>
+        <div class="big" id="hero-revenue">—</div>
+        <div class="sub" id="hero-sub"></div>
+    </div>
+
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <h2 class="section-header">Top 20 Best Sellers <span class="muted">· by total revenue in period</span></h2>
+    <div class="charts-grid full">
+        <div class="chart-box">
+            <div class="chart-container tall"><canvas id="topProductsChart"></canvas></div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Mix &amp; Concentration</h2>
+    <div class="charts-grid">
+        <div class="chart-box">
+            <h3>Revenue by Category</h3>
+            <div class="hint">Share of selling products' total revenue</div>
+            <div class="chart-container"><canvas id="catMixChart"></canvas></div>
+        </div>
+        <div class="chart-box">
+            <h3>Revenue Concentration (Pareto)</h3>
+            <div class="hint">Cumulative share of revenue by product rank</div>
+            <div class="chart-container"><canvas id="paretoChart"></canvas></div>
+        </div>
+        <div class="chart-box">
+            <h3>Top 10 Brands by Revenue</h3>
+            <div class="hint">Selling brands ranked by total revenue</div>
+            <div class="chart-container"><canvas id="brandChart"></canvas></div>
+        </div>
+        <div class="chart-box">
+            <h3>Daily Revenue (7-day MA)</h3>
+            <div class="hint">Across all selling products, EUR</div>
+            <div class="chart-container"><canvas id="dailyChart"></canvas></div>
+        </div>
+    </div>
+
+    <h2 class="section-header">Product Ranking <span class="muted">· filter by category, search by ASIN/title/brand</span></h2>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="table-wrapper"><div id="table-host"></div></div>
+
+    <footer>
+        Generated from Keepa data via BigQuery · Sales estimates from Keepa v2 model · amazon.es only · P&amp;L Analytics
+    </footer>
+</div>
+
+<script>
+const DATA = {"products": [{"asin": "B00CHO4PZI", "segment": "creatine", "segment_label": "Creatine", "brand": "Amix", "title": "AMIX - Creatina Monohidratada - 500 Gramos + 250 Gramos Gratis - Complemento Alimenticio - Mejora el Rendimiento F\u00edsico - Ideal para Deportistas - 100% Micronizada - Prote\u00edna Masa Muscular", "image": "https://images-na.ssl-images-amazon.com/images/I/51Kep4Lnq2L.jpg", "price": 53.9, "bsr": 1970, "monthly_units": 100.0, "rating": 4.5, "reviews": 1265, "total_revenue": 147012.6, "total_units": 2826.6, "days": 476, "avg_daily_revenue": 308.85, "avg_daily_units": 5.94, "rank": 1}, {"asin": "B00DH77LE6", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00edna Isolada Isoprime CFM, 2Kg - Gran Aporte de Amino\u00e1cidos - Contiene Enzimas Digestivas - Libre de Aspartamo, Prote\u00ednas para Aumentar Masa Muscular, Sabor Chocolate", "image": "https://images-na.ssl-images-amazon.com/images/I/81Ei4tBsVuL.jpg", "price": 111.9, "bsr": 658, "monthly_units": 50.0, "rating": 4.4, "reviews": 276, "total_revenue": 139242.28, "total_units": 1404.0, "days": 476, "avg_daily_revenue": 292.53, "avg_daily_units": 2.95, "rank": 2}, {"asin": "B07B4LXGVH", "segment": "creatine", "segment_label": "Creatine", "brand": "Amix", "title": "AMIX - Creatina Monohidratada - 300 Gramos - Complemento Alimenticio - Mejora el Rendimiento F\u00edsico - Ideal para Deportistas - 100% Micronizada - Prote\u00edna Masa Muscular", "image": "https://images-na.ssl-images-amazon.com/images/I/617mle7HsVL.jpg", "price": 32.01, "bsr": 1307, "monthly_units": 200.0, "rating": 4.5, "reviews": 157, "total_revenue": 133065.13, "total_units": 4383.8, "days": 476, "avg_daily_revenue": 279.55, "avg_daily_units": 9.21, "rank": 3}, {"asin": "B00DH77IJ4", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00edna Isolada Isoprime CFM, 1 Kg - Gran Aporte de Amino\u00e1cidos - Contiene Enzimas Digestivas - Libre de Aspartamo, Prote\u00ednas para Aumentar Masa Muscular, Sabor Chocolate", "image": "https://images-na.ssl-images-amazon.com/images/I/613gACyXIIL.jpg", "price": 64.5, "bsr": 658, "monthly_units": 100.0, "rating": 4.5, "reviews": 277, "total_revenue": 132983.17, "total_units": 2292.9, "days": 476, "avg_daily_revenue": 279.38, "avg_daily_units": 4.82, "rank": 4}, {"asin": "B086HPSSP3", "segment": "creatine", "segment_label": "Creatine", "brand": "Amix", "title": "AMIX - Creatina Monohidratada Creapure en Bote de 300 g - 100% Creapure - Suplemento para Ganar Masa Muscular- Ideal para mejorar el rendimiento en deportes de fuerza y ejercicios cortos e intensos", "image": "https://images-na.ssl-images-amazon.com/images/I/618hIYGhZgL.jpg", "price": 36.9, "bsr": 1507, "monthly_units": 200.0, "rating": 4.6, "reviews": 131, "total_revenue": 125622.58, "total_units": 3782.6, "days": 476, "avg_daily_revenue": 263.91, "avg_daily_units": 7.95, "rank": 5}, {"asin": "B00JKJBLDC", "segment": "creatine", "segment_label": "Creatine", "brand": "Amix", "title": "AMIX - Creatina Monohidratada - 220 C\u00e1psulas - Complemento Alimenticio - Mejora el Rendimiento F\u00edsico - Ideal para Deportistas - 100% Micronizada - Prote\u00edna Masa Muscular", "image": "https://images-na.ssl-images-amazon.com/images/I/71PNFoPiO+L.jpg", "price": 40.9, "bsr": 4566, "monthly_units": 150.0, "rating": 4.4, "reviews": 311, "total_revenue": 103741.03, "total_units": 2783.3, "days": 476, "avg_daily_revenue": 217.94, "avg_daily_units": 5.85, "rank": 6}, {"asin": "B0CJY9BYXB", "segment": "creatine", "segment_label": "Creatine", "brand": "zerolab", "title": "AMIX CREATINE CREAPURE 300 Gr + Batidor", "image": "https://images-na.ssl-images-amazon.com/images/I/41xxNtA3Q5L.jpg", "price": 36.9, "bsr": 8982, "monthly_units": 50.0, "rating": 4.6, "reviews": 110, "total_revenue": 91562.41, "total_units": 2721.4, "days": 476, "avg_daily_revenue": 192.36, "avg_daily_units": 5.72, "rank": 7}, {"asin": "B00CQMTKO2", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00edna Whey - Pure Fusion - 2,3 Kg - Concentrado de Suero Ultra Filtrado - Prote\u00edna Isolada con Splenda - Contiene L-glutamina - Prote\u00ednas para Aumentar Masa Muscular - Sabor Chocolate", "image": "https://images-na.ssl-images-amazon.com/images/I/71BnfHuicYL.jpg", "price": 92.9, "bsr": 2717, "monthly_units": 50.0, "rating": 4.5, "reviews": 230, "total_revenue": 89729.59, "total_units": 1123.7, "days": 476, "avg_daily_revenue": 188.51, "avg_daily_units": 2.36, "rank": 8}, {"asin": "B074K3FNTY", "segment": "creatine", "segment_label": "Creatine", "brand": "Amix", "title": "AMIX Creatine Monohydrate - 300 gr, Polvo", "image": "https://images-na.ssl-images-amazon.com/images/I/71Uq89+jjSL.jpg", "price": 32.2, "bsr": 1968, "monthly_units": 50.0, "rating": 4.5, "reviews": 1265, "total_revenue": 79823.87, "total_units": 2576.9, "days": 476, "avg_daily_revenue": 167.7, "avg_daily_units": 5.41, "rank": 9}, {"asin": "B00BGAO2U2", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00ednas para Aumentar Masa Muscular - Predator - 2 Kg - Ayuda al Crecimiento Muscular - Libre de Aspartamo - Prote\u00edna de Suero de Calidad - Ideal para Batidos de Prote\u00ednas - Sabor Chocolate", "image": "https://images-na.ssl-images-amazon.com/images/I/71JYICLzwsL.jpg", "price": 71.86, "bsr": 1852, "monthly_units": 50.0, "rating": 4.4, "reviews": 371, "total_revenue": 61328.42, "total_units": 896.4, "days": 476, "avg_daily_revenue": 128.84, "avg_daily_units": 1.88, "rank": 10}, {"asin": "B00BGANY1U", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00ednas para Aumentar Masa Muscular - Predator - 1 Kg - Ayuda al Crecimiento Muscular - Libre de Aspartamo - Prote\u00edna de Suero de Calidad - Ideal para Batidos de Prote\u00ednas - Sabor Chocolate", "image": "https://images-na.ssl-images-amazon.com/images/I/61pmQDS87sL.jpg", "price": 41.7, "bsr": 1689, "monthly_units": 83.0, "rating": 4.4, "reviews": 371, "total_revenue": 60105.31, "total_units": 1573.5, "days": 476, "avg_daily_revenue": 126.27, "avg_daily_units": 3.31, "rank": 11}, {"asin": "B00BGAOF7C", "segment": "creatine", "segment_label": "Creatine", "brand": "Amix", "title": "AMIX - Creatina Monohidrato - Kre-Alkalyn - 150 C\u00e1psulas - Ideal para Deportistas - Complemento para Aumentar la Fuerza - Absorci\u00f3n Mejorada - Prote\u00ednas para Aumentar Masa Muscular", "image": "https://images-na.ssl-images-amazon.com/images/I/61nUNvR1Y8L.jpg", "price": 41.7, "bsr": 6382, "monthly_units": 75.0, "rating": 4.4, "reviews": 135, "total_revenue": 58998.79, "total_units": 1487.5, "days": 476, "avg_daily_revenue": 123.95, "avg_daily_units": 3.12, "rank": 12}, {"asin": "B074JW1QM5", "segment": "performance_boosters", "segment_label": "Performance Boosters", "brand": "Amix", "title": "AMIX Testo F-200-250 Tabletas - Suplemento Alimenticio - Aumenta el Nivel de Testosterona - Aporta Fuerza Energ\u00eda y Resistencia - Refuerza el Sistema Inmunol\u00f3gico", "image": "https://images-na.ssl-images-amazon.com/images/I/71xBCQMY8vL.jpg", "price": 64.7, "bsr": 8188, "monthly_units": 30.0, "rating": 4.2, "reviews": 240, "total_revenue": 47590.27, "total_units": 759.0, "days": 476, "avg_daily_revenue": 99.98, "avg_daily_units": 1.59, "rank": 13}, {"asin": "B07SD5N1CB", "segment": "vitamins_minerals", "segment_label": "Vitamins & Minerals", "brand": "AMI", "title": "AMIX Multi Mega-Stack - 120 Capsulas", "image": "https://images-na.ssl-images-amazon.com/images/I/4168Ei5-fAL.jpg", "price": 25.9, "bsr": 6964, "monthly_units": 50.0, "rating": 4.5, "reviews": 135, "total_revenue": 46622.81, "total_units": 1880.6, "days": 476, "avg_daily_revenue": 97.95, "avg_daily_units": 3.95, "rank": 14}, {"asin": "B0189D0Q2Q", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00edna Isolada Isoprime CFM, 1 Kg - Gran Aporte de Amino\u00e1cidos - Contiene Enzimas Digestivas - Libre de Aspartamo, Prote\u00ednas para Aumentar Masa Muscular, Sabor Vainilla", "image": "https://images-na.ssl-images-amazon.com/images/I/81+vngmiABL.jpg", "price": 64.5, "bsr": 10305, "monthly_units": 50.0, "rating": 4.5, "reviews": 128, "total_revenue": 45728.74, "total_units": 787.9, "days": 476, "avg_daily_revenue": 96.07, "avg_daily_units": 1.66, "rank": 15}, {"asin": "B00CQME39Y", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00edna Whey - Pure Fusion - 1 Kg - Concentrado de Suero Ultra Filtrado - Prote\u00edna Isolada con Splenda - Contiene L-glutamina - Prote\u00ednas para Aumentar Masa Muscular - Sabor Chocolate", "image": "https://images-na.ssl-images-amazon.com/images/I/81-BqhfVOuL.jpg", "price": 53.5, "bsr": 20118, "monthly_units": 30.0, "rating": 4.6, "reviews": 213, "total_revenue": 43946.12, "total_units": 983.9, "days": 476, "avg_daily_revenue": 92.32, "avg_daily_units": 2.07, "rank": 16}, {"asin": "B00CQME3A8", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Prote\u00edna Whey - Pure Fusion - 1 Kg - Concentrado de Suero Ultra Filtrado - Prote\u00edna Isolada con Splenda - Contiene L-glutamina - Prote\u00ednas para Aumentar Masa Muscular - Sabor Vainilla", "image": "https://images-na.ssl-images-amazon.com/images/I/81-BqhfVOuL.jpg", "price": 51.75, "bsr": 2677, "monthly_units": 20.0, "rating": 4.5, "reviews": 172, "total_revenue": 37363.72, "total_units": 876.0, "days": 476, "avg_daily_revenue": 78.5, "avg_daily_units": 1.84, "rank": 17}, {"asin": "B00JKJCSHU", "segment": "performance_boosters", "segment_label": "Performance Boosters", "brand": "Amix", "title": "AMIX - Complemento Alimenticio - Tribu-ZMA - 90 Tabletas - Recuperador Muscular - Estimula la Testosterona - Aumenta la Masa Muscular - Complemento Deportivo", "image": "https://images-na.ssl-images-amazon.com/images/I/619QzEiGjNL.jpg", "price": 42.9, "bsr": 11947, "monthly_units": 50.0, "rating": 4.2, "reviews": 123, "total_revenue": 33704.72, "total_units": 828.0, "days": 476, "avg_daily_revenue": 70.81, "avg_daily_units": 1.74, "rank": 18}, {"asin": "B00BGAO01S", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00ednas para Aumentar Masa Muscular - Predator - 1 Kg - Ayuda al Crecimiento Muscular - Libre de Aspartamo - Prote\u00edna de Suero de Calidad - Ideal para Batidos de Prote\u00ednas - Sabor Fresa", "image": "https://images-na.ssl-images-amazon.com/images/I/61pmQDS87sL.jpg", "price": 41.7, "bsr": 1957, "monthly_units": 50.0, "rating": 4.4, "reviews": 123, "total_revenue": 32467.93, "total_units": 850.4, "days": 476, "avg_daily_revenue": 68.21, "avg_daily_units": 1.79, "rank": 19}, {"asin": "B008OT2X5Y", "segment": "performance_boosters", "segment_label": "Performance Boosters", "brand": "Amix", "title": "Amix Thermo Lean, Quemadores de Grasa, 75,6 gr", "image": "https://images-na.ssl-images-amazon.com/images/I/61RTRCHywuL.jpg", "price": 34.05, "bsr": 7088, "monthly_units": 50.0, "rating": 4.2, "reviews": 262, "total_revenue": 30726.4, "total_units": 890.4, "days": 415, "avg_daily_revenue": 74.04, "avg_daily_units": 2.15, "rank": 20}, {"asin": "B00JLVLVNO", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Complemento Alimenticio - Carbojet Basic - Carbohidratos y Prote\u00ednas para Aumentar la Masa Muscular - Con Concentrado de Prote\u00edna de Suero -Recuperador Muscular - Sabor Vainilla - 3 KG", "image": "https://images-na.ssl-images-amazon.com/images/I/81pHQptUXzL.jpg", "price": 36.3, "bsr": 2301, "monthly_units": 50.0, "rating": 4.2, "reviews": 161, "total_revenue": 29444.7, "total_units": 841.0, "days": 476, "avg_daily_revenue": 61.86, "avg_daily_units": 1.77, "rank": 21}, {"asin": "B086HPJTNG", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 300 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Naranja - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/619sN2q8jOL.jpg", "price": 23.7, "bsr": 2368, "monthly_units": 50.0, "rating": 4.4, "reviews": 137, "total_revenue": 26165.67, "total_units": 1157.1, "days": 476, "avg_daily_revenue": 54.97, "avg_daily_units": 2.43, "rank": 22}, {"asin": "B00JKJBNLM", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00ednas para Aumentar Masa Muscular - Tribulyn 90% en Formato de 90 C\u00e1psulas - Ayuda a Incrementar la Fuerza y la Masa Muscular - Mejora la Libido", "image": "https://images-na.ssl-images-amazon.com/images/I/71oYsrAXE1L.jpg", "price": 34.27, "bsr": 12008, "monthly_units": 30.0, "rating": 4.2, "reviews": 141, "total_revenue": 24907.48, "total_units": 741.2, "days": 476, "avg_daily_revenue": 52.33, "avg_daily_units": 1.56, "rank": 23}, {"asin": "B019SNBDI2", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 530 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Frutas del Bosque - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/71LXniahJPL.jpg", "price": 36.2, "bsr": 3664, "monthly_units": 20.0, "rating": 4.6, "reviews": 111, "total_revenue": 22267.39, "total_units": 598.8, "days": 476, "avg_daily_revenue": 46.78, "avg_daily_units": 1.26, "rank": 24}, {"asin": "B00BGAO46O", "segment": "protein", "segment_label": "Protein", "brand": "Amix", "title": "AMIX - Prote\u00ednas para Aumentar Masa Muscular - Predator - 2 Kg - Ayuda al Crecimiento Muscular - Libre de Aspartamo - Prote\u00edna de Suero de Calidad - Ideal para Batidos de Prote\u00ednas - Sabor Fresa", "image": "https://images-na.ssl-images-amazon.com/images/I/71JYICLzwsL.jpg", "price": 72.36, "bsr": 1689, "monthly_units": 10.0, "rating": 4.4, "reviews": 123, "total_revenue": 17357.65, "total_units": 254.9, "days": 476, "avg_daily_revenue": 36.47, "avg_daily_units": 0.54, "rank": 25}, {"asin": "B0788DFRGZ", "segment": "antioxidants", "segment_label": "Antioxidants", "brand": "Amix", "title": "AMIX - Suplemento Alimenticio - NA R ALA en Bote de 60 C\u00e1psulas - Grandes Propiedades Antioxidantes - Ideal como Aporte de Energ\u00eda - R\u00e1pida Metabolizaci\u00f3n", "image": "https://images-na.ssl-images-amazon.com/images/I/71muIfTb-+L.jpg", "price": 29.9, "bsr": 21267, "monthly_units": 30.0, "rating": 4.4, "reviews": 113, "total_revenue": 14631.68, "total_units": 511.2, "days": 476, "avg_daily_revenue": 30.74, "avg_daily_units": 1.07, "rank": 26}, {"asin": "B00JKJCG5O", "segment": "performance_boosters", "segment_label": "Performance Boosters", "brand": "Amix", "title": "AMIX - Complemento Alimenticio - Caffeine 200 Mg With Taurine - 90 C\u00e1psulas - Mejora la Resistencia - Ayuda a la Concentraci\u00f3n - Suplemento Alimenticio de Cafe\u00edna", "image": "https://images-na.ssl-images-amazon.com/images/I/61q26shuhgL.jpg", "price": 24.9, "bsr": 17219, "monthly_units": 50.0, "rating": 4.2, "reviews": 174, "total_revenue": 14202.18, "total_units": 605.5, "days": 476, "avg_daily_revenue": 29.84, "avg_daily_units": 1.27, "rank": 27}, {"asin": "B00BUILMIK", "segment": "performance_boosters", "segment_label": "Performance Boosters", "brand": "Amix", "title": "AMIX - Complemento Alimenticio - Nitric Oxide - 120 C\u00e1psulas - Suplemento de \u00d3xido N\u00edtrico - Efecto Vasodilatador - Reduce la Fatiga - Complemento a base de L-arginina", "image": "https://images-na.ssl-images-amazon.com/images/I/71WpBjP4AKL.jpg", "price": 34.99, "bsr": 6906, "monthly_units": 50.0, "rating": 4.2, "reviews": 269, "total_revenue": 13663.61, "total_units": 407.2, "days": 148, "avg_daily_revenue": 92.32, "avg_daily_units": 2.75, "rank": 28}, {"asin": "B077C5DXG5", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 530 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - Ideal para Deportistas - Sabor Mango - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/71pSiniHjhL.jpg", "price": 38.1, "bsr": 3664, "monthly_units": 20.0, "rating": 4.4, "reviews": 132, "total_revenue": 13661.12, "total_units": 367.9, "days": 476, "avg_daily_revenue": 28.7, "avg_daily_units": 0.77, "rank": 29}, {"asin": "B086H8D2WS", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 300 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Mango - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/61NGWjXKRUL.jpg", "price": 23.3, "bsr": 3697, "monthly_units": 10.0, "rating": 4.4, "reviews": 171, "total_revenue": 13139.05, "total_units": 581.4, "days": 476, "avg_daily_revenue": 27.6, "avg_daily_units": 1.22, "rank": 30}, {"asin": "B07J2GJLDL", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 1 Kg - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Frutas del bosque - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/81USQgDWRpL.jpg", "price": 72.9, "bsr": 3921, "monthly_units": 10.0, "rating": 4.4, "reviews": 171, "total_revenue": 13122.16, "total_units": 188.2, "days": 476, "avg_daily_revenue": 27.57, "avg_daily_units": 0.4, "rank": 31}, {"asin": "B086HQT8QH", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 300 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Natural - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/61smJ6w1HYL.jpg", "price": 23.7, "bsr": 2435, "monthly_units": 20.0, "rating": 4.4, "reviews": 131, "total_revenue": 11282.72, "total_units": 498.7, "days": 476, "avg_daily_revenue": 23.7, "avg_daily_units": 1.05, "rank": 32}, {"asin": "B086HP4GM8", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 300 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Lima Lim\u00f3n - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/61aqYTkSElL.jpg", "price": 23.7, "bsr": 3664, "monthly_units": 20.0, "rating": 4.5, "reviews": 248, "total_revenue": 10665.65, "total_units": 475.5, "days": 476, "avg_daily_revenue": 22.41, "avg_daily_units": 1.0, "rank": 33}, {"asin": "B017BY8GCQ", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 530 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - Ideal para Deportistas - Sabor Natural - Amino\u00e1cidos Ramificados", "image": "https://images-na.ssl-images-amazon.com/images/I/61BVtYtfXxL.jpg", "price": 39.5, "bsr": 2346, "monthly_units": 10.0, "rating": 4.4, "reviews": 131, "total_revenue": 9043.39, "total_units": 241.0, "days": 476, "avg_daily_revenue": 19.0, "avg_daily_units": 0.51, "rank": 34}, {"asin": "B00JMR86EO", "segment": "vitamins_minerals", "segment_label": "Vitamins & Minerals", "brand": "Amix", "title": "AMIX - Complejo Vitam\u00ednico - Multi Mega Stack con Vitaminas y Minerales - 120 Tabletas - Mejora el Rendimiento F\u00edsico y Mental - Suplemento con Hierro - Eficaces Suplementos Vitam\u00ednicos", "image": "https://images-na.ssl-images-amazon.com/images/I/51-qZvvtscL.jpg", "price": 24.28, "bsr": 1836, "monthly_units": 200.0, "rating": 4.5, "reviews": 1076, "total_revenue": 8867.89, "total_units": 360.1, "days": 54, "avg_daily_revenue": 164.22, "avg_daily_units": 6.67, "rank": 35}, {"asin": "B086HPXBWS", "segment": "bcaa_aminoacids", "segment_label": "BCAA & Amino Acids", "brand": "Amix", "title": "AMIX - Bcaa Glutamina - 300 Gramos - Complemento Alimenticio de Glutamina en Polvo - Reduce el Catabolismo Muscular - \u00d3ptimo para Deportistas - Sabor Cola - Amino\u00e1cidos Ramificados, 1 unidad", "image": "https://images-na.ssl-images-amazon.com/images/I/71wl7OoND3L.jpg", "price": 23.7, "bsr": 2964, "monthly_units": 10.0, "rating": 4.4, "reviews": 132, "total_revenue": 5714.69, "total_units": 256.2, "days": 476, "avg_daily_revenue": 12.01, "avg_daily_units": 0.54, "rank": 36}, {"asin": "B086HQLSC1", "segment": "accessories_other", "segment_label": "Accessories & Other", "brand": "Amix", "title": "AMIX - Stevia Mr. Poppers - 500 Gr - Endulzante Natural - Producto Sin Calor\u00edas - Endulza Postres y Bebidas - Apto para Diab\u00e9ticos - Sin Aromas Artificiales - Saborizantes sin Az\u00facar", "image": "https://images-na.ssl-images-amazon.com/images/I/61woTAuUOuL.jpg", "price": 13.5, "bsr": 6513, "monthly_units": 10.0, "rating": 4.0, "reviews": 107, "total_revenue": 3878.27, "total_units": 319.2, "days": 476, "avg_daily_revenue": 8.15, "avg_daily_units": 0.67, "rank": 37}, {"asin": "B00K1JHH0Q", "segment": "accessories_other", "segment_label": "Accessories & Other", "brand": "Amix", "title": "Shaker Mezclador Amix - 600 ml", "image": "https://images-na.ssl-images-amazon.com/images/I/51icwHcxs3L.jpg", "price": 7.6, "bsr": 51567, "monthly_units": 10.0, "rating": 4.4, "reviews": 125, "total_revenue": 1292.57, "total_units": 188.5, "days": 476, "avg_daily_revenue": 2.72, "avg_daily_units": 0.4, "rank": 38}], "timeseries": [{"date": "2025-01-01", "revenue": 3931.43, "units": 98.6}, {"date": "2025-01-02", "revenue": 4111.96, "units": 102.1}, {"date": "2025-01-03", "revenue": 4197.77, "units": 103.82}, {"date": "2025-01-04", "revenue": 4019.15, "units": 102.24}, {"date": "2025-01-05", "revenue": 4068.31, "units": 101.11}, {"date": "2025-01-06", "revenue": 4066.95, "units": 100.93}, {"date": "2025-01-07", "revenue": 4228.54, "units": 103.78}, {"date": "2025-01-08", "revenue": 4401.64, "units": 108.46}, {"date": "2025-01-09", "revenue": 4247.17, "units": 105.48}, {"date": "2025-01-10", "revenue": 4252.51, "units": 104.63}, {"date": "2025-01-11", "revenue": 4130.57, "units": 101.56}, {"date": "2025-01-12", "revenue": 4027.5, "units": 98.47}, {"date": "2025-01-13", "revenue": 4128.85, "units": 100.8}, {"date": "2025-01-14", "revenue": 4499.26, "units": 109.47}, {"date": "2025-01-15", "revenue": 4309.49, "units": 105.37}, {"date": "2025-01-16", "revenue": 4292.6, "units": 105.32}, {"date": "2025-01-17", "revenue": 4274.2, "units": 106.15}, {"date": "2025-01-18", "revenue": 4301.64, "units": 108.0}, {"date": "2025-01-19", "revenue": 3976.64, "units": 99.98}, {"date": "2025-01-20", "revenue": 3867.18, "units": 95.28}, {"date": "2025-01-21", "revenue": 4175.62, "units": 101.97}, {"date": "2025-01-22", "revenue": 4200.36, "units": 103.07}, {"date": "2025-01-23", "revenue": 4456.01, "units": 108.62}, {"date": "2025-01-24", "revenue": 4336.43, "units": 106.47}, {"date": "2025-01-25", "revenue": 4259.77, "units": 106.09}, {"date": "2025-01-26", "revenue": 4223.56, "units": 103.27}, {"date": "2025-01-27", "revenue": 4501.18, "units": 108.74}, {"date": "2025-01-28", "revenue": 4456.65, "units": 107.46}, {"date": "2025-01-29", "revenue": 4554.7, "units": 109.28}, {"date": "2025-01-30", "revenue": 4645.16, "units": 111.53}, {"date": "2025-01-31", "revenue": 4544.55, "units": 110.87}, {"date": "2025-02-01", "revenue": 4616.4, "units": 112.69}, {"date": "2025-02-02", "revenue": 4550.74, "units": 111.23}, {"date": "2025-02-03", "revenue": 4517.49, "units": 107.51}, {"date": "2025-02-04", "revenue": 4899.01, "units": 118.1}, {"date": "2025-02-05", "revenue": 4791.78, "units": 116.55}, {"date": "2025-02-06", "revenue": 4650.9, "units": 113.19}, {"date": "2025-02-07", "revenue": 4468.72, "units": 108.29}, {"date": "2025-02-08", "revenue": 4200.69, "units": 102.07}, {"date": "2025-02-09", "revenue": 4011.85, "units": 98.37}, {"date": "2025-02-10", "revenue": 4319.94, "units": 105.29}, {"date": "2025-02-11", "revenue": 4216.32, "units": 103.05}, {"date": "2025-02-12", "revenue": 4226.55, "units": 103.89}, {"date": "2025-02-13", "revenue": 4301.14, "units": 104.52}, {"date": "2025-02-14", "revenue": 4285.07, "units": 105.52}, {"date": "2025-02-15", "revenue": 4082.65, "units": 102.14}, {"date": "2025-02-16", "revenue": 3782.1, "units": 92.67}, {"date": "2025-02-17", "revenue": 3957.31, "units": 98.5}, {"date": "2025-02-18", "revenue": 4254.7, "units": 106.1}, {"date": "2025-02-19", "revenue": 4079.47, "units": 101.65}, {"date": "2025-02-20", "revenue": 4181.01, "units": 104.09}, {"date": "2025-02-21", "revenue": 3907.35, "units": 98.71}, {"date": "2025-02-22", "revenue": 3866.29, "units": 94.83}, {"date": "2025-02-23", "revenue": 3604.65, "units": 88.08}, {"date": "2025-02-24", "revenue": 3878.7, "units": 92.77}, {"date": "2025-02-25", "revenue": 4312.83, "units": 104.83}, {"date": "2025-02-26", "revenue": 4287.77, "units": 107.57}, {"date": "2025-02-27", "revenue": 4249.0, "units": 108.29}, {"date": "2025-02-28", "revenue": 4227.44, "units": 106.51}, {"date": "2025-03-01", "revenue": 4227.52, "units": 106.48}, {"date": "2025-03-02", "revenue": 4242.75, "units": 104.67}, {"date": "2025-03-03", "revenue": 4343.07, "units": 107.17}, {"date": "2025-03-04", "revenue": 4584.57, "units": 113.0}, {"date": "2025-03-05", "revenue": 4356.81, "units": 106.53}, {"date": "2025-03-06", "revenue": 4262.79, "units": 104.01}, {"date": "2025-03-07", "revenue": 4102.52, "units": 102.55}, {"date": "2025-03-08", "revenue": 3895.92, "units": 98.02}, {"date": "2025-03-09", "revenue": 3800.11, "units": 97.31}, {"date": "2025-03-10", "revenue": 4020.86, "units": 99.38}, {"date": "2025-03-11", "revenue": 4181.28, "units": 103.38}, {"date": "2025-03-12", "revenue": 4171.61, "units": 102.78}, {"date": "2025-03-13", "revenue": 4004.28, "units": 98.68}, {"date": "2025-03-14", "revenue": 3977.38, "units": 100.58}, {"date": "2025-03-15", "revenue": 3727.44, "units": 95.25}, {"date": "2025-03-16", "revenue": 3788.2, "units": 95.94}, {"date": "2025-03-17", "revenue": 3953.97, "units": 98.38}, {"date": "2025-03-18", "revenue": 4264.29, "units": 104.74}, {"date": "2025-03-19", "revenue": 4040.02, "units": 101.2}, {"date": "2025-03-20", "revenue": 4143.08, "units": 101.43}, {"date": "2025-03-21", "revenue": 4213.39, "units": 103.68}, {"date": "2025-03-22", "revenue": 4176.43, "units": 102.66}, {"date": "2025-03-23", "revenue": 4066.9, "units": 99.87}, {"date": "2025-03-24", "revenue": 4259.68, "units": 103.41}, {"date": "2025-03-25", "revenue": 4218.67, "units": 101.24}, {"date": "2025-03-26", "revenue": 4104.39, "units": 98.51}, {"date": "2025-03-27", "revenue": 3986.41, "units": 95.77}, {"date": "2025-03-28", "revenue": 4149.95, "units": 98.07}, {"date": "2025-03-29", "revenue": 4281.59, "units": 101.66}, {"date": "2025-03-30", "revenue": 3947.23, "units": 96.73}, {"date": "2025-03-31", "revenue": 4136.94, "units": 98.84}, {"date": "2025-04-01", "revenue": 4611.52, "units": 107.27}, {"date": "2025-04-02", "revenue": 4614.94, "units": 106.55}, {"date": "2025-04-03", "revenue": 4610.81, "units": 107.19}, {"date": "2025-04-04", "revenue": 4631.48, "units": 108.83}, {"date": "2025-04-05", "revenue": 4167.85, "units": 98.54}, {"date": "2025-04-06", "revenue": 4078.43, "units": 96.44}, {"date": "2025-04-07", "revenue": 3989.12, "units": 97.3}, {"date": "2025-04-08", "revenue": 4380.19, "units": 101.92}, {"date": "2025-04-09", "revenue": 4507.7, "units": 103.34}, {"date": "2025-04-10", "revenue": 4368.9, "units": 101.16}, {"date": "2025-04-11", "revenue": 4178.24, "units": 97.69}, {"date": "2025-04-12", "revenue": 3792.38, "units": 94.15}, {"date": "2025-04-13", "revenue": 3782.61, "units": 94.35}, {"date": "2025-04-14", "revenue": 3703.25, "units": 91.77}, {"date": "2025-04-15", "revenue": 3598.99, "units": 89.47}, {"date": "2025-04-16", "revenue": 3478.57, "units": 85.5}, {"date": "2025-04-17", "revenue": 3603.65, "units": 89.1}, {"date": "2025-04-18", "revenue": 3771.37, "units": 92.54}, {"date": "2025-04-19", "revenue": 3506.75, "units": 86.74}, {"date": "2025-04-20", "revenue": 3524.66, "units": 86.97}, {"date": "2025-04-21", "revenue": 3612.76, "units": 88.0}, {"date": "2025-04-22", "revenue": 3781.32, "units": 91.14}, {"date": "2025-04-23", "revenue": 3679.43, "units": 90.05}, {"date": "2025-04-24", "revenue": 3601.62, "units": 87.86}, {"date": "2025-04-25", "revenue": 3617.51, "units": 88.31}, {"date": "2025-04-26", "revenue": 3514.53, "units": 87.8}, {"date": "2025-04-27", "revenue": 3522.09, "units": 87.73}, {"date": "2025-04-28", "revenue": 3639.98, "units": 89.04}, {"date": "2025-04-29", "revenue": 3678.08, "units": 89.8}, {"date": "2025-04-30", "revenue": 3751.12, "units": 92.53}, {"date": "2025-05-01", "revenue": 3674.95, "units": 93.34}, {"date": "2025-05-02", "revenue": 3601.8, "units": 87.7}, {"date": "2025-05-03", "revenue": 3752.75, "units": 91.19}, {"date": "2025-05-04", "revenue": 3617.09, "units": 88.85}, {"date": "2025-05-05", "revenue": 3729.1, "units": 90.86}, {"date": "2025-05-06", "revenue": 3821.98, "units": 93.38}, {"date": "2025-05-07", "revenue": 3856.85, "units": 94.99}, {"date": "2025-05-08", "revenue": 3899.5, "units": 94.5}, {"date": "2025-05-09", "revenue": 3851.86, "units": 93.43}, {"date": "2025-05-10", "revenue": 3933.37, "units": 95.44}, {"date": "2025-05-11", "revenue": 3670.7, "units": 87.88}, {"date": "2025-05-12", "revenue": 3768.33, "units": 90.51}, {"date": "2025-05-13", "revenue": 3841.62, "units": 92.21}, {"date": "2025-05-14", "revenue": 3746.8, "units": 90.82}, {"date": "2025-05-15", "revenue": 3917.5, "units": 92.99}, {"date": "2025-05-16", "revenue": 3914.75, "units": 93.9}, {"date": "2025-05-17", "revenue": 3779.09, "units": 92.36}, {"date": "2025-05-18", "revenue": 3742.33, "units": 91.22}, {"date": "2025-05-19", "revenue": 3860.7, "units": 91.94}, {"date": "2025-05-20", "revenue": 4047.72, "units": 96.59}, {"date": "2025-05-21", "revenue": 4020.98, "units": 96.08}, {"date": "2025-05-22", "revenue": 3894.98, "units": 92.68}, {"date": "2025-05-23", "revenue": 3776.65, "units": 90.66}, {"date": "2025-05-24", "revenue": 3821.79, "units": 91.46}, {"date": "2025-05-25", "revenue": 3737.19, "units": 90.05}, {"date": "2025-05-26", "revenue": 3958.57, "units": 93.91}, {"date": "2025-05-27", "revenue": 4127.41, "units": 99.91}, {"date": "2025-05-28", "revenue": 4039.64, "units": 96.28}, {"date": "2025-05-29", "revenue": 4149.36, "units": 100.26}, {"date": "2025-05-30", "revenue": 4104.87, "units": 98.42}, {"date": "2025-05-31", "revenue": 4102.09, "units": 98.25}, {"date": "2025-06-01", "revenue": 3965.1, "units": 95.39}, {"date": "2025-06-02", "revenue": 3918.31, "units": 95.16}, {"date": "2025-06-03", "revenue": 3934.83, "units": 95.79}, {"date": "2025-06-04", "revenue": 3923.42, "units": 96.28}, {"date": "2025-06-05", "revenue": 3894.21, "units": 95.42}, {"date": "2025-06-06", "revenue": 3850.45, "units": 94.61}, {"date": "2025-06-07", "revenue": 3942.68, "units": 96.1}, {"date": "2025-06-08", "revenue": 3838.16, "units": 94.54}, {"date": "2025-06-09", "revenue": 3700.51, "units": 91.41}, {"date": "2025-06-10", "revenue": 3587.43, "units": 89.25}, {"date": "2025-06-11", "revenue": 3726.04, "units": 93.05}, {"date": "2025-06-12", "revenue": 3651.54, "units": 91.33}, {"date": "2025-06-13", "revenue": 3791.38, "units": 93.03}, {"date": "2025-06-14", "revenue": 3575.75, "units": 87.88}, {"date": "2025-06-15", "revenue": 3520.24, "units": 86.19}, {"date": "2025-06-16", "revenue": 3640.27, "units": 89.86}, {"date": "2025-06-17", "revenue": 3501.49, "units": 87.06}, {"date": "2025-06-18", "revenue": 3459.51, "units": 84.58}, {"date": "2025-06-19", "revenue": 3422.5, "units": 83.41}, {"date": "2025-06-20", "revenue": 3338.28, "units": 81.76}, {"date": "2025-06-21", "revenue": 3358.06, "units": 83.01}, {"date": "2025-06-22", "revenue": 3358.42, "units": 82.79}, {"date": "2025-06-23", "revenue": 3328.91, "units": 81.46}, {"date": "2025-06-24", "revenue": 3389.93, "units": 83.36}, {"date": "2025-06-25", "revenue": 3414.17, "units": 83.69}, {"date": "2025-06-26", "revenue": 3328.02, "units": 82.51}, {"date": "2025-06-27", "revenue": 3377.87, "units": 85.38}, {"date": "2025-06-28", "revenue": 3557.55, "units": 89.58}, {"date": "2025-06-29", "revenue": 3493.9, "units": 88.47}, {"date": "2025-06-30", "revenue": 3441.25, "units": 85.79}, {"date": "2025-07-01", "revenue": 3623.86, "units": 87.81}, {"date": "2025-07-02", "revenue": 3670.23, "units": 89.85}, {"date": "2025-07-03", "revenue": 3725.75, "units": 90.62}, {"date": "2025-07-04", "revenue": 3707.23, "units": 89.82}, {"date": "2025-07-05", "revenue": 3613.83, "units": 88.79}, {"date": "2025-07-06", "revenue": 3586.21, "units": 87.96}, {"date": "2025-07-07", "revenue": 3473.51, "units": 84.56}, {"date": "2025-07-08", "revenue": 3356.11, "units": 82.53}, {"date": "2025-07-09", "revenue": 3148.95, "units": 78.55}, {"date": "2025-07-10", "revenue": 3070.81, "units": 76.48}, {"date": "2025-07-11", "revenue": 3127.24, "units": 76.31}, {"date": "2025-07-12", "revenue": 3108.91, "units": 77.62}, {"date": "2025-07-13", "revenue": 3172.3, "units": 77.73}, {"date": "2025-07-14", "revenue": 3217.87, "units": 77.46}, {"date": "2025-07-15", "revenue": 3369.1, "units": 80.04}, {"date": "2025-07-16", "revenue": 3474.78, "units": 81.92}, {"date": "2025-07-17", "revenue": 3524.29, "units": 83.98}, {"date": "2025-07-18", "revenue": 3587.66, "units": 86.0}, {"date": "2025-07-19", "revenue": 3530.14, "units": 84.7}, {"date": "2025-07-20", "revenue": 3540.34, "units": 85.01}, {"date": "2025-07-21", "revenue": 3493.62, "units": 84.07}, {"date": "2025-07-22", "revenue": 3465.92, "units": 82.34}, {"date": "2025-07-23", "revenue": 3377.75, "units": 81.47}, {"date": "2025-07-24", "revenue": 3583.55, "units": 85.75}, {"date": "2025-07-25", "revenue": 3603.85, "units": 86.5}, {"date": "2025-07-26", "revenue": 3489.39, "units": 84.14}, {"date": "2025-07-27", "revenue": 3409.86, "units": 82.04}, {"date": "2025-07-28", "revenue": 3356.22, "units": 80.72}, {"date": "2025-07-29", "revenue": 3571.47, "units": 85.07}, {"date": "2025-07-30", "revenue": 3565.58, "units": 84.64}, {"date": "2025-07-31", "revenue": 3497.24, "units": 83.59}, {"date": "2025-08-01", "revenue": 3723.91, "units": 89.86}, {"date": "2025-08-02", "revenue": 3804.77, "units": 90.93}, {"date": "2025-08-03", "revenue": 3786.86, "units": 90.15}, {"date": "2025-08-04", "revenue": 3756.05, "units": 89.6}, {"date": "2025-08-05", "revenue": 3678.57, "units": 87.24}, {"date": "2025-08-06", "revenue": 3759.72, "units": 89.78}, {"date": "2025-08-07", "revenue": 3689.81, "units": 89.04}, {"date": "2025-08-08", "revenue": 3660.82, "units": 89.16}, {"date": "2025-08-09", "revenue": 3672.02, "units": 89.76}, {"date": "2025-08-10", "revenue": 3725.76, "units": 90.11}, {"date": "2025-08-11", "revenue": 3764.44, "units": 90.54}, {"date": "2025-08-12", "revenue": 3686.19, "units": 88.5}, {"date": "2025-08-13", "revenue": 3724.03, "units": 90.1}, {"date": "2025-08-14", "revenue": 3749.97, "units": 90.67}, {"date": "2025-08-15", "revenue": 3823.44, "units": 91.46}, {"date": "2025-08-16", "revenue": 3684.31, "units": 89.56}, {"date": "2025-08-17", "revenue": 3593.83, "units": 86.6}, {"date": "2025-08-18", "revenue": 3639.33, "units": 87.59}, {"date": "2025-08-19", "revenue": 3779.72, "units": 90.83}, {"date": "2025-08-20", "revenue": 3905.38, "units": 92.95}, {"date": "2025-08-21", "revenue": 3853.33, "units": 91.66}, {"date": "2025-08-22", "revenue": 3798.67, "units": 90.75}, {"date": "2025-08-23", "revenue": 3769.3, "units": 90.94}, {"date": "2025-08-24", "revenue": 3706.21, "units": 89.5}, {"date": "2025-08-25", "revenue": 3671.31, "units": 89.12}, {"date": "2025-08-26", "revenue": 3823.78, "units": 92.14}, {"date": "2025-08-27", "revenue": 3898.26, "units": 93.78}, {"date": "2025-08-28", "revenue": 3992.36, "units": 94.71}, {"date": "2025-08-29", "revenue": 3974.89, "units": 94.46}, {"date": "2025-08-30", "revenue": 3898.38, "units": 93.75}, {"date": "2025-08-31", "revenue": 3890.86, "units": 94.49}, {"date": "2025-09-01", "revenue": 3910.35, "units": 95.13}, {"date": "2025-09-02", "revenue": 4087.49, "units": 99.0}, {"date": "2025-09-03", "revenue": 4126.75, "units": 99.83}, {"date": "2025-09-04", "revenue": 4204.4, "units": 102.07}, {"date": "2025-09-05", "revenue": 4391.5, "units": 106.7}, {"date": "2025-09-06", "revenue": 4238.21, "units": 103.29}, {"date": "2025-09-07", "revenue": 4180.19, "units": 102.17}, {"date": "2025-09-08", "revenue": 4011.21, "units": 97.58}, {"date": "2025-09-09", "revenue": 4007.08, "units": 97.22}, {"date": "2025-09-10", "revenue": 4218.79, "units": 100.47}, {"date": "2025-09-11", "revenue": 4281.37, "units": 102.64}, {"date": "2025-09-12", "revenue": 4268.52, "units": 102.28}, {"date": "2025-09-13", "revenue": 4099.79, "units": 99.57}, {"date": "2025-09-14", "revenue": 4109.74, "units": 100.01}, {"date": "2025-09-15", "revenue": 4152.84, "units": 100.55}, {"date": "2025-09-16", "revenue": 4164.53, "units": 101.41}, {"date": "2025-09-17", "revenue": 4075.67, "units": 98.0}, {"date": "2025-09-18", "revenue": 4102.42, "units": 98.59}, {"date": "2025-09-19", "revenue": 4230.88, "units": 101.95}, {"date": "2025-09-20", "revenue": 4355.21, "units": 105.06}, {"date": "2025-09-21", "revenue": 4393.46, "units": 106.42}, {"date": "2025-09-22", "revenue": 4307.77, "units": 104.84}, {"date": "2025-09-23", "revenue": 4210.11, "units": 103.07}, {"date": "2025-09-24", "revenue": 4189.18, "units": 101.9}, {"date": "2025-09-25", "revenue": 4409.19, "units": 105.26}, {"date": "2025-09-26", "revenue": 4390.03, "units": 105.43}, {"date": "2025-09-27", "revenue": 4163.02, "units": 101.37}, {"date": "2025-09-28", "revenue": 4096.83, "units": 99.82}, {"date": "2025-09-29", "revenue": 4029.75, "units": 97.76}, {"date": "2025-09-30", "revenue": 4188.26, "units": 100.75}, {"date": "2025-10-01", "revenue": 4218.82, "units": 101.13}, {"date": "2025-10-02", "revenue": 4160.94, "units": 99.01}, {"date": "2025-10-03", "revenue": 4075.71, "units": 97.36}, {"date": "2025-10-04", "revenue": 3974.47, "units": 95.01}, {"date": "2025-10-05", "revenue": 3937.68, "units": 95.09}, {"date": "2025-10-06", "revenue": 4124.38, "units": 101.3}, {"date": "2025-10-07", "revenue": 3876.23, "units": 96.99}, {"date": "2025-10-08", "revenue": 3784.49, "units": 97.43}, {"date": "2025-10-09", "revenue": 3456.77, "units": 90.97}, {"date": "2025-10-10", "revenue": 3313.23, "units": 86.8}, {"date": "2025-10-11", "revenue": 3283.6, "units": 85.27}, {"date": "2025-10-12", "revenue": 3312.76, "units": 86.29}, {"date": "2025-10-13", "revenue": 3314.47, "units": 85.79}, {"date": "2025-10-14", "revenue": 3468.64, "units": 88.75}, {"date": "2025-10-15", "revenue": 3768.57, "units": 94.75}, {"date": "2025-10-16", "revenue": 3751.17, "units": 94.62}, {"date": "2025-10-17", "revenue": 3808.94, "units": 94.68}, {"date": "2025-10-18", "revenue": 3708.87, "units": 92.74}, {"date": "2025-10-19", "revenue": 3750.29, "units": 92.44}, {"date": "2025-10-20", "revenue": 3798.04, "units": 92.13}, {"date": "2025-10-21", "revenue": 3766.39, "units": 91.53}, {"date": "2025-10-22", "revenue": 3678.16, "units": 89.34}, {"date": "2025-10-23", "revenue": 4074.2, "units": 98.59}, {"date": "2025-10-24", "revenue": 3946.9, "units": 97.1}, {"date": "2025-10-25", "revenue": 3623.42, "units": 90.0}, {"date": "2025-10-26", "revenue": 3420.3, "units": 85.11}, {"date": "2025-10-27", "revenue": 3456.37, "units": 85.44}, {"date": "2025-10-28", "revenue": 3589.02, "units": 88.22}, {"date": "2025-10-29", "revenue": 3651.88, "units": 87.8}, {"date": "2025-10-30", "revenue": 3797.34, "units": 92.03}, {"date": "2025-10-31", "revenue": 3808.56, "units": 92.99}, {"date": "2025-11-01", "revenue": 3779.37, "units": 92.45}, {"date": "2025-11-02", "revenue": 3703.86, "units": 90.28}, {"date": "2025-11-03", "revenue": 3871.54, "units": 94.8}, {"date": "2025-11-04", "revenue": 3978.98, "units": 96.35}, {"date": "2025-11-05", "revenue": 3985.32, "units": 96.21}, {"date": "2025-11-06", "revenue": 3912.55, "units": 95.78}, {"date": "2025-11-07", "revenue": 3714.81, "units": 92.5}, {"date": "2025-11-08", "revenue": 3648.12, "units": 92.64}, {"date": "2025-11-09", "revenue": 3618.63, "units": 91.81}, {"date": "2025-11-10", "revenue": 3826.01, "units": 92.96}, {"date": "2025-11-11", "revenue": 3950.53, "units": 97.63}, {"date": "2025-11-12", "revenue": 3941.01, "units": 95.85}, {"date": "2025-11-13", "revenue": 3822.16, "units": 94.82}, {"date": "2025-11-14", "revenue": 3678.06, "units": 91.29}, {"date": "2025-11-15", "revenue": 3558.54, "units": 90.8}, {"date": "2025-11-16", "revenue": 3561.32, "units": 91.04}, {"date": "2025-11-17", "revenue": 3690.36, "units": 91.28}, {"date": "2025-11-18", "revenue": 3570.43, "units": 88.76}, {"date": "2025-11-19", "revenue": 3578.54, "units": 89.37}, {"date": "2025-11-20", "revenue": 3508.28, "units": 88.72}, {"date": "2025-11-21", "revenue": 3350.86, "units": 86.03}, {"date": "2025-11-22", "revenue": 3342.99, "units": 86.26}, {"date": "2025-11-23", "revenue": 3337.93, "units": 86.08}, {"date": "2025-11-24", "revenue": 3319.44, "units": 85.89}, {"date": "2025-11-25", "revenue": 3481.1, "units": 88.93}, {"date": "2025-11-26", "revenue": 3507.66, "units": 88.96}, {"date": "2025-11-27", "revenue": 3604.07, "units": 91.52}, {"date": "2025-11-28", "revenue": 3357.64, "units": 86.69}, {"date": "2025-11-29", "revenue": 3157.04, "units": 81.3}, {"date": "2025-11-30", "revenue": 2938.02, "units": 75.67}, {"date": "2025-12-01", "revenue": 3327.2, "units": 88.31}, {"date": "2025-12-02", "revenue": 3477.6, "units": 92.56}, {"date": "2025-12-03", "revenue": 3509.98, "units": 92.01}, {"date": "2025-12-04", "revenue": 3693.99, "units": 97.39}, {"date": "2025-12-05", "revenue": 3631.8, "units": 94.96}, {"date": "2025-12-06", "revenue": 3627.94, "units": 95.14}, {"date": "2025-12-07", "revenue": 3700.4, "units": 96.06}, {"date": "2025-12-08", "revenue": 3693.06, "units": 95.37}, {"date": "2025-12-09", "revenue": 3561.0, "units": 93.13}, {"date": "2025-12-10", "revenue": 3460.37, "units": 91.17}, {"date": "2025-12-11", "revenue": 3589.68, "units": 94.91}, {"date": "2025-12-12", "revenue": 3632.74, "units": 95.77}, {"date": "2025-12-13", "revenue": 3582.32, "units": 96.4}, {"date": "2025-12-14", "revenue": 3501.94, "units": 94.12}, {"date": "2025-12-15", "revenue": 3456.7, "units": 91.13}, {"date": "2025-12-16", "revenue": 3411.09, "units": 89.74}, {"date": "2025-12-17", "revenue": 3418.27, "units": 89.99}, {"date": "2025-12-18", "revenue": 3608.74, "units": 95.83}, {"date": "2025-12-19", "revenue": 3567.67, "units": 94.18}, {"date": "2025-12-20", "revenue": 3335.32, "units": 88.98}, {"date": "2025-12-21", "revenue": 3255.22, "units": 86.63}, {"date": "2025-12-22", "revenue": 3372.26, "units": 89.81}, {"date": "2025-12-23", "revenue": 3349.95, "units": 87.64}, {"date": "2025-12-24", "revenue": 3433.38, "units": 88.23}, {"date": "2025-12-25", "revenue": 3418.48, "units": 87.73}, {"date": "2025-12-26", "revenue": 3274.38, "units": 85.89}, {"date": "2025-12-27", "revenue": 3255.34, "units": 85.54}, {"date": "2025-12-28", "revenue": 3240.09, "units": 85.41}, {"date": "2025-12-29", "revenue": 3311.86, "units": 86.13}, {"date": "2025-12-30", "revenue": 3249.39, "units": 84.66}, {"date": "2025-12-31", "revenue": 3359.21, "units": 87.38}, {"date": "2026-01-01", "revenue": 3328.94, "units": 87.88}, {"date": "2026-01-02", "revenue": 3523.73, "units": 90.29}, {"date": "2026-01-03", "revenue": 3516.46, "units": 89.92}, {"date": "2026-01-04", "revenue": 3485.96, "units": 89.47}, {"date": "2026-01-05", "revenue": 3478.94, "units": 89.94}, {"date": "2026-01-06", "revenue": 3546.23, "units": 93.24}, {"date": "2026-01-07", "revenue": 3639.98, "units": 94.97}, {"date": "2026-01-08", "revenue": 3744.58, "units": 97.29}, {"date": "2026-01-09", "revenue": 3894.2, "units": 101.68}, {"date": "2026-01-10", "revenue": 3833.27, "units": 100.61}, {"date": "2026-01-11", "revenue": 3841.91, "units": 99.68}, {"date": "2026-01-12", "revenue": 3974.94, "units": 102.12}, {"date": "2026-01-13", "revenue": 4045.46, "units": 103.38}, {"date": "2026-01-14", "revenue": 4123.5, "units": 103.72}, {"date": "2026-01-15", "revenue": 4065.2, "units": 102.81}, {"date": "2026-01-16", "revenue": 3708.28, "units": 95.39}, {"date": "2026-01-17", "revenue": 3798.06, "units": 97.21}, {"date": "2026-01-18", "revenue": 3871.76, "units": 98.14}, {"date": "2026-01-19", "revenue": 3731.08, "units": 94.0}, {"date": "2026-01-20", "revenue": 3852.71, "units": 96.49}, {"date": "2026-01-21", "revenue": 3772.66, "units": 95.06}, {"date": "2026-01-22", "revenue": 3826.92, "units": 96.91}, {"date": "2026-01-23", "revenue": 3845.74, "units": 98.38}, {"date": "2026-01-24", "revenue": 3820.79, "units": 99.03}, {"date": "2026-01-25", "revenue": 3711.89, "units": 95.31}, {"date": "2026-01-26", "revenue": 3859.92, "units": 97.77}, {"date": "2026-01-27", "revenue": 3957.48, "units": 101.57}, {"date": "2026-01-28", "revenue": 3894.15, "units": 100.65}, {"date": "2026-01-29", "revenue": 4133.66, "units": 104.48}, {"date": "2026-01-30", "revenue": 4091.43, "units": 104.28}, {"date": "2026-01-31", "revenue": 4007.44, "units": 102.22}, {"date": "2026-02-01", "revenue": 3829.56, "units": 97.65}, {"date": "2026-02-02", "revenue": 3820.94, "units": 95.36}, {"date": "2026-02-03", "revenue": 3872.25, "units": 95.62}, {"date": "2026-02-04", "revenue": 3882.46, "units": 96.36}, {"date": "2026-02-05", "revenue": 3777.44, "units": 94.35}, {"date": "2026-02-06", "revenue": 3943.75, "units": 101.94}, {"date": "2026-02-07", "revenue": 3696.0, "units": 95.99}, {"date": "2026-02-08", "revenue": 3576.18, "units": 92.49}, {"date": "2026-02-09", "revenue": 3538.98, "units": 90.19}, {"date": "2026-02-10", "revenue": 3432.05, "units": 87.44}, {"date": "2026-02-11", "revenue": 3378.49, "units": 85.25}, {"date": "2026-02-12", "revenue": 3489.37, "units": 87.81}, {"date": "2026-02-13", "revenue": 3452.17, "units": 86.85}, {"date": "2026-02-14", "revenue": 3351.17, "units": 85.42}, {"date": "2026-02-15", "revenue": 3233.98, "units": 81.77}, {"date": "2026-02-16", "revenue": 3170.96, "units": 79.52}, {"date": "2026-02-17", "revenue": 3143.7, "units": 79.55}, {"date": "2026-02-18", "revenue": 3206.84, "units": 81.09}, {"date": "2026-02-19", "revenue": 3258.64, "units": 81.74}, {"date": "2026-02-20", "revenue": 3157.85, "units": 80.06}, {"date": "2026-02-21", "revenue": 3105.19, "units": 80.28}, {"date": "2026-02-22", "revenue": 3042.43, "units": 78.63}, {"date": "2026-02-23", "revenue": 2900.16, "units": 74.51}, {"date": "2026-02-24", "revenue": 3089.49, "units": 77.83}, {"date": "2026-02-25", "revenue": 3179.8, "units": 79.67}, {"date": "2026-02-26", "revenue": 3319.31, "units": 82.84}, {"date": "2026-02-27", "revenue": 3355.74, "units": 83.07}, {"date": "2026-02-28", "revenue": 3336.15, "units": 82.37}, {"date": "2026-03-01", "revenue": 3387.15, "units": 83.14}, {"date": "2026-03-02", "revenue": 3252.5, "units": 79.35}, {"date": "2026-03-03", "revenue": 3246.22, "units": 79.01}, {"date": "2026-03-04", "revenue": 3088.64, "units": 75.82}, {"date": "2026-03-05", "revenue": 3167.71, "units": 77.43}, {"date": "2026-03-06", "revenue": 3222.41, "units": 79.38}, {"date": "2026-03-07", "revenue": 3184.64, "units": 79.39}, {"date": "2026-03-08", "revenue": 3087.4, "units": 76.39}, {"date": "2026-03-09", "revenue": 3148.2, "units": 76.75}, {"date": "2026-03-10", "revenue": 3252.17, "units": 79.14}, {"date": "2026-03-11", "revenue": 3162.78, "units": 79.36}, {"date": "2026-03-12", "revenue": 3059.0, "units": 77.01}, {"date": "2026-03-13", "revenue": 3114.39, "units": 79.1}, {"date": "2026-03-14", "revenue": 3131.35, "units": 79.89}, {"date": "2026-03-15", "revenue": 3017.33, "units": 76.18}, {"date": "2026-03-16", "revenue": 2940.12, "units": 74.32}, {"date": "2026-03-17", "revenue": 3040.07, "units": 77.29}, {"date": "2026-03-18", "revenue": 3310.71, "units": 83.86}, {"date": "2026-03-19", "revenue": 3396.44, "units": 85.68}, {"date": "2026-03-20", "revenue": 3414.81, "units": 87.85}, {"date": "2026-03-21", "revenue": 3436.29, "units": 87.21}, {"date": "2026-03-22", "revenue": 3475.22, "units": 87.32}, {"date": "2026-03-23", "revenue": 3476.46, "units": 86.44}, {"date": "2026-03-24", "revenue": 3522.55, "units": 85.99}, {"date": "2026-03-25", "revenue": 3530.85, "units": 86.12}, {"date": "2026-03-26", "revenue": 3489.27, "units": 86.54}, {"date": "2026-03-27", "revenue": 3473.64, "units": 86.84}, {"date": "2026-03-28", "revenue": 3493.08, "units": 86.56}, {"date": "2026-03-29", "revenue": 3533.53, "units": 86.99}, {"date": "2026-03-30", "revenue": 3502.56, "units": 87.17}, {"date": "2026-03-31", "revenue": 3507.25, "units": 86.02}, {"date": "2026-04-01", "revenue": 3674.93, "units": 89.26}, {"date": "2026-04-02", "revenue": 3733.24, "units": 90.42}, {"date": "2026-04-03", "revenue": 3640.3, "units": 88.15}, {"date": "2026-04-04", "revenue": 3572.58, "units": 85.84}, {"date": "2026-04-05", "revenue": 3479.24, "units": 83.5}, {"date": "2026-04-06", "revenue": 3566.29, "units": 84.84}, {"date": "2026-04-07", "revenue": 3586.87, "units": 85.39}, {"date": "2026-04-08", "revenue": 3631.17, "units": 86.34}, {"date": "2026-04-09", "revenue": 3638.26, "units": 87.29}, {"date": "2026-04-10", "revenue": 3560.08, "units": 85.89}, {"date": "2026-04-11", "revenue": 3489.37, "units": 85.27}, {"date": "2026-04-12", "revenue": 3422.28, "units": 82.79}, {"date": "2026-04-13", "revenue": 3450.17, "units": 82.66}, {"date": "2026-04-14", "revenue": 3488.32, "units": 83.65}, {"date": "2026-04-15", "revenue": 3573.1, "units": 85.24}, {"date": "2026-04-16", "revenue": 3573.81, "units": 85.11}, {"date": "2026-04-17", "revenue": 3586.47, "units": 85.28}, {"date": "2026-04-18", "revenue": 3580.08, "units": 85.08}, {"date": "2026-04-19", "revenue": 3577.71, "units": 85.02}, {"date": "2026-04-20", "revenue": 3574.92, "units": 84.93}, {"date": "2026-04-21", "revenue": 3576.41, "units": 84.93}], "category_breakdown": [{"segment": "creatine", "label": "Creatine", "revenue": 739826.41, "units": 20562.1, "products": 7}, {"segment": "protein", "label": "Protein", "revenue": 677241.39, "units": 11749.8, "products": 11}, {"segment": "bcaa_aminoacids", "label": "BCAA & Amino Acids", "revenue": 162425.56, "units": 5240.8, "products": 10}, {"segment": "performance_boosters", "label": "Performance Boosters", "revenue": 139887.18, "units": 3490.1, "products": 5}, {"segment": "vitamins_minerals", "label": "Vitamins & Minerals", "revenue": 55490.7, "units": 2240.7, "products": 2}, {"segment": "antioxidants", "label": "Antioxidants", "revenue": 14631.68, "units": 511.2, "products": 1}, {"segment": "accessories_other", "label": "Accessories & Other", "revenue": 5170.84, "units": 507.7, "products": 2}], "brand_breakdown": [{"brand": "Amix", "revenue": 1656488.54, "units": 39700.4, "products": 36}, {"brand": "zerolab", "revenue": 91562.41, "units": 2721.4, "products": 1}, {"brand": "AMI", "revenue": 46622.81, "units": 1880.6, "products": 1}], "pareto": [{"rank": 1, "share": 8.1916, "cum_share": 8.1916}, {"rank": 2, "share": 7.7586, "cum_share": 15.9502}, {"rank": 3, "share": 7.4144, "cum_share": 23.3647}, {"rank": 4, "share": 7.4099, "cum_share": 30.7746}, {"rank": 5, "share": 6.9997, "cum_share": 37.7743}, {"rank": 6, "share": 5.7805, "cum_share": 43.5548}, {"rank": 7, "share": 5.1019, "cum_share": 48.6567}, {"rank": 8, "share": 4.9998, "cum_share": 53.6565}, {"rank": 9, "share": 4.4478, "cum_share": 58.1043}, {"rank": 10, "share": 3.4172, "cum_share": 61.5215}, {"rank": 11, "share": 3.3491, "cum_share": 64.8706}, {"rank": 12, "share": 3.2874, "cum_share": 68.1581}, {"rank": 13, "share": 2.6518, "cum_share": 70.8098}, {"rank": 14, "share": 2.5978, "cum_share": 73.4077}, {"rank": 15, "share": 2.548, "cum_share": 75.9557}, {"rank": 16, "share": 2.4487, "cum_share": 78.4044}, {"rank": 17, "share": 2.0819, "cum_share": 80.4863}, {"rank": 18, "share": 1.878, "cum_share": 82.3644}, {"rank": 19, "share": 1.8091, "cum_share": 84.1735}, {"rank": 20, "share": 1.7121, "cum_share": 85.8856}, {"rank": 21, "share": 1.6407, "cum_share": 87.5262}, {"rank": 22, "share": 1.458, "cum_share": 88.9842}, {"rank": 23, "share": 1.3879, "cum_share": 90.3721}, {"rank": 24, "share": 1.2407, "cum_share": 91.6128}, {"rank": 25, "share": 0.9672, "cum_share": 92.58}, {"rank": 26, "share": 0.8153, "cum_share": 93.3953}, {"rank": 27, "share": 0.7914, "cum_share": 94.1866}, {"rank": 28, "share": 0.7613, "cum_share": 94.948}, {"rank": 29, "share": 0.7612, "cum_share": 95.7092}, {"rank": 30, "share": 0.7321, "cum_share": 96.4413}, {"rank": 31, "share": 0.7312, "cum_share": 97.1725}, {"rank": 32, "share": 0.6287, "cum_share": 97.8011}, {"rank": 33, "share": 0.5943, "cum_share": 98.3954}, {"rank": 34, "share": 0.5039, "cum_share": 98.8993}, {"rank": 35, "share": 0.4941, "cum_share": 99.3935}, {"rank": 36, "share": 0.3184, "cum_share": 99.7119}, {"rank": 37, "share": 0.2161, "cum_share": 99.928}, {"rank": 38, "share": 0.072, "cum_share": 100.0}], "summary": {"total_revenue": 1794673.76, "total_units": 44302.4, "selling_products": 38, "tracked_products": 42, "selling_brands": 3, "avg_revenue_per_product": 47228.26, "n_to_50pct": 8, "n_to_80pct": 17, "date_min": "2025-01-01", "date_max": "2026-04-21", "span_days": 476, "top_product_asin": "B00CHO4PZI", "top_product_title": "AMIX - Creatina Monohidratada - 500 Gramos + 250 Gramos Gratis - Complemento Alimenticio - Mejora el Rendimiento F\u00edsico - Ideal para Deportistas - 100% Micronizada - Prote\u00edna Masa Muscular", "top_product_revenue": 147012.6, "top_product_brand": "Amix"}, "segment_labels": {"protein": "Protein", "creatine": "Creatine", "bcaa_aminoacids": "BCAA & Amino Acids", "performance_boosters": "Performance Boosters", "antioxidants": "Antioxidants", "vitamins_minerals": "Vitamins & Minerals", "accessories_other": "Accessories & Other"}, "start_date": "2025-01-01", "report_date": "April 21, 2026"};
+const PRODUCTS = DATA.products;
+const TS = DATA.timeseries;
+const CATS = DATA.category_breakdown;
+const BRANDS = DATA.brand_breakdown;
+const PARETO = DATA.pareto;
+const SUMMARY = DATA.summary;
+const SEGMENT_LABELS = DATA.segment_labels;
+
+let charts = [];
+let activeCategory = 'all';
+let searchQuery = '';
+let productSort = { key: 'rank', dir: 'asc' };
+
+const CATEGORY_COLORS = {
+    protein: '#9a3f1f',
+    creatine: '#b48a4a',
+    bcaa_aminoacids: '#3d6f5e',
+    performance_boosters: '#6d4e8c',
+    antioxidants: '#c47540',
+    vitamins_minerals: '#7a8450',
+    accessories_other: '#8b7760',
+};
+
+function toggleTheme() {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === 'dark' ? '' : 'dark';
+    charts.forEach(c => c.update());
+}
+function isDark() { return document.documentElement.dataset.theme === 'dark'; }
+function gridColor() { return isDark() ? 'rgba(255,255,255,0.05)' : 'rgba(30,20,10,0.06)'; }
+function textColor() { return isDark() ? '#958b7c' : '#6e665a'; }
+
+function fmtEUR(v) {
+    if (v == null) return '—';
+    if (Math.abs(v) >= 1e6) return '€' + (v/1e6).toFixed(2) + 'M';
+    if (Math.abs(v) >= 1e3) return '€' + (v/1e3).toFixed(1) + 'K';
+    return '€' + Math.round(v).toLocaleString();
+}
+function fmtEURfull(v) { return v == null ? '—' : '€' + Math.round(v).toLocaleString(); }
+function fmtN(v) {
+    if (v == null) return '—';
+    if (v >= 1e6) return (v/1e6).toFixed(2) + 'M';
+    if (v >= 1e3) return (v/1e3).toFixed(1) + 'K';
+    return Math.round(v).toLocaleString();
+}
+
+// ── Hero ──
+function renderHero() {
+    document.getElementById('hero-revenue').textContent = fmtEUR(SUMMARY.total_revenue);
+    document.getElementById('hero-sub').innerHTML =
+        '<strong>' + fmtN(SUMMARY.total_units) + '</strong> units · '
+        + '<strong>' + SUMMARY.selling_products + '</strong> selling products of '
+        + SUMMARY.tracked_products + ' tracked · '
+        + '<strong>' + SUMMARY.span_days + '</strong> days analyzed';
+}
+
+// ── KPIs ──
+function renderKPIs() {
+    const top = PRODUCTS[0];
+    const html = `
+        <div class="kpi accent">
+            <div class="label">#1 Best Seller</div>
+            <div class="value">${fmtEUR(SUMMARY.top_product_revenue)}</div>
+            <div class="sub">${SUMMARY.top_product_brand || '—'} · ${SUMMARY.top_product_asin || '—'}</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Avg Revenue / Product</div>
+            <div class="value">${fmtEUR(SUMMARY.avg_revenue_per_product)}</div>
+            <div class="sub">across ${SUMMARY.selling_products} selling products</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Top Products → 50% Rev</div>
+            <div class="value">${SUMMARY.n_to_50pct}</div>
+            <div class="sub">products account for half the sales</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Top Products → 80% Rev</div>
+            <div class="value">${SUMMARY.n_to_80pct}</div>
+            <div class="sub">classic Pareto cutoff</div>
+        </div>
+    `;
+    document.getElementById('kpi-grid').innerHTML = html;
+}
+
+// ── Filter bar ──
+function renderFilterBar() {
+    const cats = [...CATS].sort((a, b) => b.revenue - a.revenue);
+    const allCount = PRODUCTS.length;
+    let html = '<span class="label">Category:</span>';
+    html += `<button class="filter-pill ${activeCategory === 'all' ? 'active' : ''}" onclick="setCategory('all')">All<span class="count">${allCount}</span></button>`;
+    cats.forEach(c => {
+        html += `<button class="filter-pill ${activeCategory === c.segment ? 'active' : ''}" onclick="setCategory('${c.segment}')">${c.label}<span class="count">${c.products}</span></button>`;
+    });
+    html += `<input class="search-box" type="text" placeholder="Search ASIN, title, brand…" oninput="setSearch(this.value)" value="${searchQuery.replace(/"/g, '&quot;')}">`;
+    document.getElementById('filter-bar').innerHTML = html;
+}
+function setCategory(c) {
+    activeCategory = c;
+    renderFilterBar();
+    renderProductTable();
+    // Refocus search input if applicable
+    const s = document.querySelector('.search-box');
+    if (s && document.activeElement !== s) s.focus();
+}
+function setSearch(v) {
+    searchQuery = v.toLowerCase();
+    renderProductTable();
+}
+
+// ── Product table ──
+function filteredProducts() {
+    return PRODUCTS.filter(p => {
+        if (activeCategory !== 'all' && p.segment !== activeCategory) return false;
+        if (searchQuery) {
+            const hay = (p.asin + ' ' + (p.title || '') + ' ' + (p.brand || '')).toLowerCase();
+            if (!hay.includes(searchQuery)) return false;
+        }
+        return true;
+    });
+}
+
+function renderProductTable() {
+    const cols = [
+        { k: 'rank', label: '#' },
+        { k: 'image', label: '', sortable: false },
+        { k: 'title', label: 'Product' },
+        { k: 'segment_label', label: 'Category' },
+        { k: 'price', label: 'Price', num: true },
+        { k: 'bsr', label: 'BSR', num: true },
+        { k: 'rating', label: 'Rating', num: true },
+        { k: 'reviews', label: 'Reviews', num: true },
+        { k: 'monthly_units', label: 'Keepa Mo.', num: true },
+        { k: 'total_units', label: 'Period Units', num: true },
+        { k: 'avg_daily_revenue', label: 'Avg/Day', num: true },
+        { k: 'total_revenue', label: 'Period Rev', num: true },
+    ];
+
+    let rows = filteredProducts();
+
+    // If sorting by rank, keep original; otherwise re-sort.
+    if (productSort.key !== 'rank') {
+        rows = [...rows].sort((a, b) => {
+            const va = a[productSort.key], vb = b[productSort.key];
+            if (va == null) return 1;
+            if (vb == null) return -1;
+            if (typeof va === 'number') return productSort.dir === 'asc' ? va - vb : vb - va;
+            return productSort.dir === 'asc' ? String(va).localeCompare(vb) : String(vb).localeCompare(va);
+        });
+    } else if (productSort.dir === 'desc') {
+        rows = [...rows].reverse();
+    }
+
+    const thead = '<thead><tr>' + cols.map(c => {
+        const arrow = productSort.key === c.k ? (productSort.dir === 'asc' ? '▲' : '▼') : '';
+        return c.sortable === false
+            ? `<th>${c.label}</th>`
+            : `<th onclick="sortProducts('${c.k}')">${c.label}<span class="sort-arrow">${arrow}</span></th>`;
+    }).join('') + '</tr></thead>';
+
+    if (rows.length === 0) {
+        document.getElementById('table-host').innerHTML = '<table>' + thead + '</table><div class="no-results">No products match the filter.</div>';
+        return;
+    }
+
+    const tbody = '<tbody>' + rows.map(p => {
+        const url = 'https://www.amazon.es/dp/' + p.asin;
+        const img = p.image
+            ? `<a href="${url}" target="_blank" rel="noopener" class="product-img-link"><img class="product-img" src="${p.image}" alt="${p.asin}" loading="lazy"></a>`
+            : `<a href="${url}" target="_blank" rel="noopener" class="product-img-link"><span class="product-img-placeholder">·</span></a>`;
+        const rankClass = p.rank <= 3 ? 'rank-cell top3' : 'rank-cell';
+        const bsr = p.bsr != null ? p.bsr.toLocaleString() : '—';
+        const rating = p.rating != null ? p.rating.toFixed(1) + '★' : '—';
+        const reviews = p.reviews ? p.reviews.toLocaleString() : '—';
+        const monthly = p.monthly_units != null ? p.monthly_units.toLocaleString() : '—';
+        const price = p.price != null ? '€' + p.price.toFixed(2) : '—';
+        const titleSafe = (p.title || '—').replace(/"/g, '&quot;');
+        return `<tr>
+            <td class="${rankClass}">#${p.rank}</td>
+            <td>${img}</td>
+            <td class="left">
+                <div class="col-title" title="${titleSafe}">
+                    <a href="${url}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none">${p.title || '—'}</a>
+                </div>
+                <div class="brand-tag">${p.brand || '—'} · <span style="font-family:var(--font-mono)">${p.asin}</span></div>
+            </td>
+            <td><span class="cat-tag">${p.segment_label}</span></td>
+            <td>${price}</td>
+            <td>${bsr}</td>
+            <td>${rating}</td>
+            <td>${reviews}</td>
+            <td>${monthly}</td>
+            <td>${Math.round(p.total_units).toLocaleString()}</td>
+            <td>${fmtEURfull(p.avg_daily_revenue)}</td>
+            <td><strong>${fmtEURfull(p.total_revenue)}</strong></td>
+        </tr>`;
+    }).join('') + '</tbody>';
+
+    document.getElementById('table-host').innerHTML = '<table>' + thead + tbody + '</table>';
+}
+
+function sortProducts(key) {
+    if (productSort.key === key) {
+        productSort.dir = productSort.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+        productSort.key = key;
+        productSort.dir = key === 'rank' ? 'asc' : 'desc';
+    }
+    renderProductTable();
+}
+
+// ── Charts ──
+function buildCharts() {
+    charts.forEach(c => c.destroy());
+    charts = [];
+
+    // Top 20 best sellers (horizontal bar)
+    const top = PRODUCTS.slice(0, 20);
+    const labels = top.map(p => '#' + p.rank + ' ' + (p.title || p.asin).slice(0, 50));
+    const colors = top.map(p => CATEGORY_COLORS[p.segment] || '#888');
+    charts.push(new Chart(document.getElementById('topProductsChart'), {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Revenue (EUR)',
+                data: top.map(p => p.total_revenue),
+                backgroundColor: colors,
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => fmtEUR(ctx.raw),
+                        afterLabel: (ctx) => {
+                            const p = top[ctx.dataIndex];
+                            return [p.brand, p.segment_label, p.asin].join(' · ');
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: textColor(), callback: v => fmtEUR(v) }, grid: { color: gridColor() } },
+                y: { ticks: { color: textColor(), font: { size: 10 } }, grid: { display: false } }
+            }
+        }
+    }));
+
+    // Category mix doughnut
+    const sortedCats = [...CATS].sort((a, b) => b.revenue - a.revenue);
+    charts.push(new Chart(document.getElementById('catMixChart'), {
+        type: 'doughnut',
+        data: {
+            labels: sortedCats.map(c => c.label),
+            datasets: [{
+                data: sortedCats.map(c => c.revenue),
+                backgroundColor: sortedCats.map(c => CATEGORY_COLORS[c.segment] || '#888'),
+                borderWidth: 2,
+                borderColor: isDark() ? '#1c1813' : '#fff',
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { color: textColor(), font: { family: 'DM Sans', size: 11 } } },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => {
+                            const c = sortedCats[ctx.dataIndex];
+                            const total = sortedCats.reduce((s, x) => s + x.revenue, 0);
+                            const share = total ? (c.revenue / total * 100).toFixed(1) : 0;
+                            return c.label + ': ' + fmtEUR(c.revenue) + ' (' + share + '%, ' + c.products + ' products)';
+                        }
+                    }
+                }
+            }
+        }
+    }));
+
+    // Pareto
+    charts.push(new Chart(document.getElementById('paretoChart'), {
+        type: 'line',
+        data: {
+            labels: PARETO.map(p => '#' + p.rank),
+            datasets: [{
+                label: 'Cumulative %',
+                data: PARETO.map(p => p.cum_share),
+                borderColor: '#9a3f1f',
+                backgroundColor: 'rgba(154,63,31,0.10)',
+                tension: 0.2, pointRadius: 0, borderWidth: 2, fill: true,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: (items) => 'Top ' + (items[0].dataIndex + 1) + ' products',
+                        label: (ctx) => ctx.raw.toFixed(1) + '% of revenue'
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: textColor(), maxTicksLimit: 12 }, grid: { color: gridColor() } },
+                y: { min: 0, max: 100, ticks: { color: textColor(), callback: v => v + '%' }, grid: { color: gridColor() } }
+            }
+        }
+    }));
+
+    // Top 10 brands
+    const topBrands = BRANDS.slice(0, 10);
+    charts.push(new Chart(document.getElementById('brandChart'), {
+        type: 'bar',
+        data: {
+            labels: topBrands.map(b => b.brand),
+            datasets: [{
+                label: 'Revenue',
+                data: topBrands.map(b => b.revenue),
+                backgroundColor: '#3d6f5e',
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => fmtEUR(ctx.raw) + ' · ' + topBrands[ctx.dataIndex].products + ' products'
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: textColor(), callback: v => fmtEUR(v) }, grid: { color: gridColor() } },
+                y: { ticks: { color: textColor() }, grid: { display: false } }
+            }
+        }
+    }));
+
+    // Daily 7d MA
+    const ma = TS.map((r, i, arr) => {
+        const start = Math.max(0, i - 6);
+        const slice = arr.slice(start, i + 1);
+        return slice.reduce((s, x) => s + x.revenue, 0) / slice.length;
+    });
+    charts.push(new Chart(document.getElementById('dailyChart'), {
+        type: 'line',
+        data: {
+            labels: TS.map(r => r.date),
+            datasets: [{
+                label: 'Revenue (7d MA)',
+                data: ma,
+                borderColor: '#9a3f1f',
+                backgroundColor: 'rgba(154, 63, 31, 0.08)',
+                tension: 0.3, pointRadius: 0, borderWidth: 2, fill: true,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => fmtEUR(ctx.raw) } } },
+            scales: {
+                x: { ticks: { color: textColor(), maxTicksLimit: 10 }, grid: { color: gridColor() } },
+                y: { beginAtZero: true, ticks: { color: textColor(), callback: v => fmtEUR(v) }, grid: { color: gridColor() } }
+            }
+        }
+    }));
+}
+
+// ── Init ──
+renderHero();
+renderKPIs();
+renderFilterBar();
+renderProductTable();
+buildCharts();
+</script>
+</body>
+</html>
